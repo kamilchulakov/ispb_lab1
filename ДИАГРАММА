@@ -1,0 +1,28 @@
+Table point {
+  id int [pk]
+  x double 
+  y double
+}
+
+Table place {
+  id int [pk]
+  point_id int [ref: > point.id]
+  place_type_id int [ref: > place_type.id]
+}
+
+Table place_type {
+  id int [pk]
+  name varchar
+}
+
+Table road {
+  id int [pk]
+  points "int[]" [ref: > point.id]
+}
+
+Table route {
+  id int [pk]
+  points "int[]" [ref: > point.id]
+  start_place int [ref: > place.id]
+  end_place int [ref: > place.id]
+}
