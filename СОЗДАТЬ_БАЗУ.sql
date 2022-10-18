@@ -91,6 +91,8 @@ ALTER TABLE "road_work" ADD FOREIGN KEY ("start_point") REFERENCES "point" ("id"
 
 ALTER TABLE "road_work" ADD FOREIGN KEY ("end_point") REFERENCES "point" ("id");
 
+ALTER TABLE "road_work" ADD CONSTRAINT start_time_is_less CHECK ("end_time" IS NULL OR "start_time" < "end_time");
+
 ALTER TABLE "track" ADD FOREIGN KEY ("road_id") REFERENCES "road" ("id");
 
 ALTER TABLE "track" ADD FOREIGN KEY ("start_point") REFERENCES "point" ("id");
