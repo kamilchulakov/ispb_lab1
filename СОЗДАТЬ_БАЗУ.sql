@@ -21,60 +21,60 @@ CREATE TABLE "road" (
 );
 
 CREATE TABLE "road_points" (
-                               "id" int PRIMARY KEY,
-                               "road_id" int,
-                               "point_id" int
+    "id" int PRIMARY KEY,
+    "road_id" int,
+    "point_id" int
 );
 
 CREATE TABLE "road_work" (
-                             "id" int PRIMARY KEY,
-                             "road_id" int,
-                             "start_point" int,
-                             "end_point" int,
-                             "start_time" timestamp,
-                             "end_time" timestamp
+    "id" int PRIMARY KEY,
+    "road_id" int,
+    "start_point" int,
+    "end_point" int,
+    "start_time" timestamp,
+    "end_time" timestamp
 );
 
 CREATE TABLE "track" (
-                         "id" int PRIMARY KEY,
-                         "road_id" int,
-                         "start_point" int,
-                         "end_point" int,
-                         "created_time" timestamp
+    "id" int PRIMARY KEY,
+    "road_id" int,
+    "start_point" int,
+    "end_point" int,
+    "created_time" timestamp
 );
 
 CREATE TABLE "route" (
-                         "id" int PRIMARY KEY,
-                         "start_place" int,
-                         "end_place" int
+    "id" int PRIMARY KEY,
+    "start_place" int,
+    "end_place" int
 );
 
 CREATE TABLE "route_points" (
-                                "id" int PRIMARY KEY,
-                                "route_id" int,
-                                "point_id" int
+    "id" int PRIMARY KEY,
+    "route_id" int,
+    "point_id" int
 );
 
 CREATE TABLE "car" (
-                       "id" int PRIMARY KEY,
-                       "brand" varchar,
-                       "model" varchar,
-                       "left_top_wheel" int,
-                       "right_top_wheel" int,
-                       "left_back_wheel" int,
-                       "right_back_wheel" int
+    "id" int PRIMARY KEY,
+    "brand" varchar,
+    "model" varchar,
+    "left_top_wheel" int,
+    "right_top_wheel" int,
+    "left_back_wheel" int,
+    "right_back_wheel" int
 );
 
 CREATE TABLE "car_position" (
-                                "id" int PRIMARY KEY,
-                                "car_id" int,
-                                "point_id" int
+    "id" int PRIMARY KEY,
+    "car_id" int,
+    "point_id" int
 );
 
 CREATE TABLE "wheel" (
-                         "id" int PRIMARY KEY,
-                         "size" int,
-                         "brand" varchar
+    "id" int PRIMARY KEY,
+    "size" int,
+    "brand" varchar
 );
 
 ALTER TABLE "place" ADD FOREIGN KEY ("point_id") REFERENCES "point" ("id");
