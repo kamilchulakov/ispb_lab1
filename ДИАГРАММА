@@ -20,9 +20,48 @@ Table road {
   points "int[]" [ref: > point.id]
 }
 
+Table road_work {
+  id int [pk]
+  road_id int [ref: > road.id]
+  start_point int [ref: > point.id]
+  end_point int [ref: > point.id]
+  start_time timestamp
+  end_time timestamp
+}
+
+Table track {
+  id int [pk]
+  road_id int [ref: > road.id]
+  start_point int [ref: > point.id]
+  end_point int [ref: > point.id]
+  created_time timestamp
+}
+
 Table route {
   id int [pk]
   points "int[]" [ref: > point.id]
   start_place int [ref: > place.id]
   end_place int [ref: > place.id]
+}
+
+Table car {
+  id int [pk]
+  brand varchar
+  model varchar
+  left_top_wheel id [ref: > wheel.id]
+  right_top_wheel id [ref: > wheel.id]
+  left_back_wheel id [ref: > wheel.id]
+  right_back_wheel id [ref: > wheel.id]
+}
+
+Table car_position {
+  id int [pk]
+  car_id int [ref: > car.id]
+  point_id int [ref: > point.id]
+}
+
+Table wheel {
+  id int [pk]
+  size int
+  brand varchar
 }
