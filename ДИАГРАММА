@@ -45,6 +45,7 @@ Table track {
 
 Table route {
   id int [pk]
+  length int
   start_place int [ref: > place.id]
   end_place int [ref: > place.id]
 }
