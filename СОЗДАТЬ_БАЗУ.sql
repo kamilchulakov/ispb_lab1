@@ -1,33 +1,34 @@
 CREATE TABLE point (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     x float,
     y float
 );
 
 CREATE TABLE place (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    name varchar NOT NULL,
     point_id int,
     place_type_id int
 );
 
 CREATE TABLE place_type (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name varchar NOT NULL
 );
 
 CREATE TABLE road (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name varchar
 );
 
 CREATE TABLE road_points (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     road_id int,
     point_id int
 );
 
 CREATE TABLE road_work (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     road_id int,
     start_point int,
     end_point int,
@@ -36,7 +37,7 @@ CREATE TABLE road_work (
 );
 
 CREATE TABLE track (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     road_id int,
     start_point int,
     end_point int,
@@ -44,20 +45,20 @@ CREATE TABLE track (
 );
 
 CREATE TABLE route (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     length int CONSTRAINT positive_length CHECK (length > 0),
     start_place int,
     end_place int
 );
 
 CREATE TABLE route_points (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     route_id int,
     point_id int
 );
 
 CREATE TABLE car (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     brand varchar,
     model varchar,
     left_top_wheel int,
@@ -67,13 +68,13 @@ CREATE TABLE car (
 );
 
 CREATE TABLE car_position (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     car_id int,
     point_id int
 );
 
 CREATE TABLE wheel (
-    id int PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     size int,
     brand varchar
 );
@@ -81,6 +82,8 @@ CREATE TABLE wheel (
 ALTER TABLE place ADD FOREIGN KEY (point_id) REFERENCES point (id);
 
 ALTER TABLE place ADD FOREIGN KEY (place_type_id) REFERENCES place_type (id);
+
+ALTER TABLE place ADD CONSTRAINT unique_place UNIQUE(point_id);
 
 ALTER TABLE road_points ADD FOREIGN KEY (road_id) REFERENCES road (id);
 
