@@ -44,6 +44,15 @@ CREATE TABLE track (
     created_time timestamp
 );
 
+CREATE TABLE track_type (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR
+);
+
+ALTER TABLE track ADD COLUMN type int REFERENCES track_type(id);
+
+ALTER TABLE track ADD COLUMN left_side bool;
+
 CREATE TABLE route (
     id SERIAL PRIMARY KEY,
     length int CONSTRAINT positive_length CHECK (length > 0),
@@ -89,6 +98,9 @@ ALTER TABLE road_points ADD FOREIGN KEY (road_id) REFERENCES road (id);
 
 ALTER TABLE road_points ADD FOREIGN KEY (point_id) REFERENCES point (id);
 
+ALTER TABLE road_points ADD CONSTRAINT unique_pair_road UNIQUE(road_id, point_id);
+ALTER TABLE road_points DROP COLUMN id;
+
 ALTER TABLE road_work ADD FOREIGN KEY (road_id) REFERENCES road (id);
 
 ALTER TABLE road_work ADD FOREIGN KEY (start_point) REFERENCES point (id);
@@ -112,6 +124,7 @@ ALTER TABLE route_points ADD FOREIGN KEY (route_id) REFERENCES route (id);
 ALTER TABLE route_points ADD FOREIGN KEY (point_id) REFERENCES point (id);
 
 ALTER TABLE route_points ADD CONSTRAINT unique_pair UNIQUE(route_id, point_id);
+ALTER TABLE route_points DROP COLUMN id;
 
 ALTER TABLE car ADD FOREIGN KEY (left_top_wheel) REFERENCES wheel (id);
 
