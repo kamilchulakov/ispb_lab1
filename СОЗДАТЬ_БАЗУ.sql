@@ -137,3 +137,28 @@ ALTER TABLE car ADD FOREIGN KEY (right_back_wheel) REFERENCES wheel (id);
 ALTER TABLE car_position ADD FOREIGN KEY (car_id) REFERENCES car (id);
 
 ALTER TABLE car_position ADD FOREIGN KEY (point_id) REFERENCES point (id);
+
+DROP VIEW road_road_points, road_route_points, road_track;
+
+CREATE VIEW road_road_points AS
+    SELECT r.id as road_id, r.name as road_name, p.x as road_point_x, p.y as road_point_y FROM road r
+    JOIN road_points rp on r.id = rp.road_id
+    JOIN point p on rp.point_id = p.id;
+
+
+CREATE OR REPLACE VIEW road_route_points AS
+SELECT r.id as route_id, r.length as route_length, p2.name as place, pt.name as place_type, p.id as route_point_id, p.x as route_point_x, p.y as route_point_y FROM route r
+JOIN route_points rp on r.id = rp.route_id
+JOIN point p on rp.point_id = p.id
+JOIN place p2 on p.id = p2.point_id
+JOIN place_type pt on p2.place_type_id = pt.id;
+
+CREATE OR REPLACE VIEW road_track AS
+    SELECT r.id as road_id, r.name as road_name, tt.name as track_type, t.created_time as create_time, t.left_side as left_side, t.start_point as start_point, t.end_point as end_point FROM track t
+    LEFT JOIN road r on r.id = t.road_id
+    LEFT JOIN track_type tt on t.type = tt.id;
+
+CREATE OR REPLACE VIEW road_car_position AS
+    SELECT p.x as point_x, p.y as point_y, c.id as car_id, c.brand as car_brand, c.model as car_model FROM car c
+    LEFT JOIN car_position cp on cp.car_id = c.id
+    LEFT JOIN point p on p.id = cp.point_id;
